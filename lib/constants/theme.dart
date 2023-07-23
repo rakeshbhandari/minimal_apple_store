@@ -6,7 +6,7 @@ const kThirdColor = Color.fromARGB(255, 255, 255, 255);
 const kLightBackground = Color.fromARGB(255, 255, 255, 255);
 const kWhiteColor = Color.fromARGB(255, 255, 255, 255);
 const kBlackColor = Color.fromARGB(255, 0, 0, 0);
-const kLightGreen = Color(0xffe8f6fb);
+const kLightGreen = Color.fromARGB(255, 164, 219, 224);
 
 class AppTheme {
   static const kBigTitle =

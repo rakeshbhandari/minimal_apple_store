@@ -8,6 +8,7 @@ import '../providers/product_controller.dart';
 import '../widgets/ads_banner_widget.dart';
 import '../widgets/chip_widget.dart';
 import '../widgets/product_card_widget.dart';
+import 'details_page.dart';
 
 final currentIndexProvider = StateProvider<int>((ref) {
   return 0;
@@ -143,9 +144,16 @@ class HomePage extends ConsumerWidget {
                         const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                     ),
-                    itemBuilder: (context, index) => SizedBox(
-                          height: 250,
-                          child: ProductCardWidget(productIndex: index),
+                    itemBuilder: (context, index) => GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailsPage(getIndex: index))),
+                          child: SizedBox(
+                            height: 250,
+                            child: ProductCardWidget(productIndex: index),
+                          ),
                         ))
               ],
             ),

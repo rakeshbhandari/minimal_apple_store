@@ -7,6 +7,14 @@ void main() {
   runApp(const ProviderScope(
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
+      // initialRoute: '/',
+      // defaultTransition: Transition.zoom,
+      // getPages: [
+      //   GetPage(name: '/', page: () => const HomePage()),
+      //   // GetPage(name: '/favourites', page: () => const FavouritePage()),
+      //   GetPage(name: '/details', page: () =>  DetailsPage(getIndex: index,)),
+      //   // GetPage(name: '/carts', page: ()=> const CartPage ()),
+      // ],
       home: HomePage(),
     ),
   ));
