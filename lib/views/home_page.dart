@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gap/gap.dart';
+import 'package:minimal_apple_store/providers/itembag_controller.dart';
 
 import '../constants/theme.dart';
 import '../providers/product_controller.dart';
@@ -21,6 +22,7 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productNotifierProvider);
     final currentIndex = ref.watch(currentIndexProvider);
+    final cart = ref.watch(CartProvider);
     return Scaffold(
         appBar: AppBar(
           title: RichText(
@@ -49,13 +51,17 @@ class HomePage extends ConsumerWidget {
           backgroundColor: kWhiteColor,
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.shopping_bag,
-                    color: Colors.black,
-                  )),
+              padding: const EdgeInsets.only(right: 10, top: 10),
+              child: Badge(
+                label: Text(cart.length.toString()),
+                child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.local_mall_outlined,
+                      color: Colors.black,
+                      size: 24,
+                    )),
+              ),
             )
           ],
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:minimal_apple_store/model/product_model.dart';
+import 'package:minimal_apple_store/providers/itembag_controller.dart';
 
 import '../constants/theme.dart';
 import '../providers/product_controller.dart';
@@ -64,9 +66,35 @@ class ProductCardWidget extends ConsumerWidget {
                       style: AppTheme.kCardTitle,
                     ),
                     IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.add_circle,
+                        onPressed: () {
+                          ref
+                              .read(productNotifierProvider.notifier)
+                              .isSelectItem(
+                                  product[productIndex].pid, productIndex);
+
+                          if (product[productIndex].isSelected == false) {
+                            ref.read(CartProvider.notifier).addToCart(
+                                ProductModel(
+                                    pid: product[productIndex].pid,
+                                    imgURl: product[productIndex].imgURl,
+                                    title: product[productIndex].title,
+                                    price: product[productIndex].price,
+                                    shortDescription:
+                                        product[productIndex].shortDescription,
+                                    longDescription:
+                                        product[productIndex].longDescription,
+                                    review: product[productIndex].review,
+                                    rating: product[productIndex].rating));
+                          } else {
+                            ref
+                                .read(CartProvider.notifier)
+                                .removeFromCart(product[productIndex].pid);
+                          }
+                        },
+                        icon: Icon(
+                          product[productIndex].isSelected
+                              ? Icons.check_circle
+                              : Icons.add_circle,
                           size: 30,
                         ))
                   ],
