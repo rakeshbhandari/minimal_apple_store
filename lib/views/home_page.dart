@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:minimal_apple_store/providers/itembag_controller.dart';
+import 'package:minimal_apple_store/views/cart_page.dart';
 
 import '../constants/theme.dart';
 import '../providers/product_controller.dart';
@@ -55,12 +57,18 @@ class HomePage extends ConsumerWidget {
               child: Badge(
                 label: Text(cart.length.toString()),
                 child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CartPage()));
+                    },
                     icon: const Icon(
                       Icons.local_mall_outlined,
                       color: Colors.black,
                       size: 24,
                     )),
+                    
               ),
             )
           ],

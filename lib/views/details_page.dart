@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:minimal_apple_store/providers/itembag_controller.dart';
 
 import '../constants/theme.dart';
 import '../providers/product_controller.dart';
@@ -11,11 +13,13 @@ class DetailsPage extends ConsumerWidget {
   DetailsPage({super.key, required this.getIndex});
 
   int getIndex;
+  late bool _isShowingSearch = false;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(currentIndexProvider);
     final products = ref.watch(productNotifierProvider);
+    final cart = ref.watch(CartProvider);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: kLightBackground,
@@ -28,12 +32,30 @@ class DetailsPage extends ConsumerWidget {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 20),
-              child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.local_mall,
-                    color: Colors.black,
-                  )),
+              child: Container(
+                child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.local_mall,
+                          color: Colors.black,
+                        )),
+                    IconButton(
+                        onPressed: () {
+                          setState(
+                            () {
+                              _isShowingSearch = !_isShowingSearch;
+                            },
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.search,
+                          color: Colors.black,
+                        )),
+                  ],
+                ),
+              ),
             )
           ],
         ),
@@ -41,6 +63,20 @@ class DetailsPage extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Visibility(
+                  maintainSize: true,
+                  maintainAnimation: true,
+                  maintainState: true,
+                  visible: _isShowingSearch,
+                  child: Container(
+                      decoration:
+                          BoxDecoration(border: Border.all(color: Colors.red)),
+                      child: const Row(
+                        children: [
+                          Text('yo search bar ho'),
+                          Icon(Icons.search)
+                        ],
+                      ))),
               Container(
                 height: 300,
                 width: double.infinity,
@@ -130,7 +166,12 @@ class DetailsPage extends ConsumerWidget {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: kPrimaryColor,
                               minimumSize: const Size(double.infinity, 60)),
-                          onPressed: () {},
+                          onPressed: () {
+                            ref
+                                .read(CartProvider.notifier)
+                                .addToCart(products[getIndex]);
+                            Get.to(() => const HomePage());
+                          },
                           child: const Text('Add to cart'))
                     ],
                   ),
